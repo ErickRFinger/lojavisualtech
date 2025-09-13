@@ -1,0 +1,16 @@
+{
+  "name": "visualtech-loja",
+  "version": "1.0.0",
+  "description": "Catálogo de produtos VisualTech",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p $PORT -c-1",
+    "dev": "npx http-server -p 3000 -c-1"
+  },
+  "keywords": ["loja", "produtos", "visualtech"],
+  "author": "VisualTech",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

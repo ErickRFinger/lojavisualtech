@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisualTech Loja - Catálogo de Produtos</title>
+    <link rel="icon" type="image/x-icon" href="LOGOS/VISUAL SEM FUNDO.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="LOGOS/LOGO VISUAL PRETA.png" alt="VisualTech Loja" class="logo-img">
+                <h1>VisualTech Loja</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#products">Produtos</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="https://instagram.com/visualtechgba" target="_blank" class="social-btn instagram-btn">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://visualtech.onrender.com/" target="_blank" class="social-btn services-btn">
+                    <i class="fas fa-cogs"></i>
+                </a>
+                <a href="https://wa.me/5549920014159?text=Olá! Gostaria de saber mais sobre os produtos da VisualTech." target="_blank" class="social-btn whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="mailto:erick.visualtech@gmail.com?subject=Consulta sobre produtos VisualTech&body=Olá! Gostaria de saber mais sobre os produtos disponíveis." class="social-btn email-btn">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Bem-vindo à VisualTech Loja</h2>
+                <p>Especialistas em soluções de armazenamento e tecnologia</p>
+                <button class="btn btn-secondary" onclick="scrollToProducts()">
+                    Ver Produtos <i class="fas fa-arrow-down"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+        <div class="container">
+            <h2 class="section-title">Nossos Produtos</h2>
+            <div class="sync-status" id="syncStatus" style="display: none;">
+                <i class="fas fa-sync-alt"></i>
+                <span>Sincronização em tempo real ativa - verificando a cada 1 minuto</span>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Produtos serão carregados dinamicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <h2>Sobre a VisualTech</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p class="lead">Somos uma empresa especializada em soluções completas de tecnologia e informática, oferecendo produtos de alta qualidade para atender todas as suas necessidades digitais.</p>
+                        
+                        <div class="about-features">
+                            <div class="feature-item">
+                                <i class="fas fa-microchip"></i>
+                                <div>
+                                    <h3>Hardware Completo</h3>
+                                    <p>Processadores, placas-mãe, memórias RAM, HDs, SSDs e muito mais das melhores marcas do mercado.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <i class="fas fa-tools"></i>
+                                <div>
+                                    <h3>Montagem e Suporte</h3>
+                                    <p>Serviços especializados de montagem de computadores, manutenção e suporte técnico profissional.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <i class="fas fa-shipping-fast"></i>
+                                <div>
+                                    <h3>Entrega Rápida</h3>
+                                    <p>Entregamos em toda a região de Guaraciaba-SC e cidades vizinhas com agilidade e segurança.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <i class="fas fa-handshake"></i>
+                                <div>
+                                    <h3>Atendimento Personalizado</h3>
+                                    <p>Nossa equipe está sempre pronta para ajudar você a encontrar a solução ideal para seu projeto.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Anos de Experiência</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Suporte Técnico</div>
+                        </div>
+                    </div>
+                </div>
+                
+                        <div class="about-mission">
+                            <h3>Nossa Missão</h3>
+                            <p>Democratizar o acesso à tecnologia de qualidade, oferecendo produtos e serviços que impulsionem o crescimento pessoal e profissional de nossos clientes. Acreditamos que a tecnologia deve ser acessível, confiável e sempre atualizada.</p>
+                        </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>erick.visualtech@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>(49) 92001-4159</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Guaraciaba, SC</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 VisualTech Loja. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
