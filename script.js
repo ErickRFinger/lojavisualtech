@@ -597,6 +597,10 @@ function renderProducts() {
                 <p class="product-description">${product.description}</p>
                 <div class="product-price">R$ ${product.price.toFixed(2)}</div>
                 <div class="product-category-badge">${product.category.toUpperCase()}</div>
+                <button class="btn btn-buy" onclick="buyProduct('${product.name}', ${product.price})">
+                    <i class="fab fa-whatsapp"></i>
+                    COMPRAR
+                </button>
             </div>
         </div>
     `).join('');
@@ -915,6 +919,90 @@ function scrollToProducts() {
         productsSection.scrollIntoView({ behavior: 'smooth' });
     }
 }
+
+// Função para comprar produto via WhatsApp
+function buyProduct(productName, productPrice) {
+    const phoneNumber = '5549920014159'; // Número do WhatsApp com código do país
+    const message = `Olá! Gostaria de adquirir o produto: *${productName}* por R$ ${productPrice.toFixed(2)}. Podem me ajudar com mais informações?`;
+    
+    // Codificar a mensagem para URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Criar URL do WhatsApp
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    
+    // Abrir WhatsApp em nova aba
+    window.open(whatsappUrl, '_blank');
+    
+    // Mostrar notificação de sucesso
+    showNotification(`Redirecionando para WhatsApp para comprar ${productName}!`, 'success');
+    
+    console.log(`🛒 Compra iniciada: ${productName} - R$ ${productPrice.toFixed(2)}`);
+}
+
+// Função para forçar atualização imediata da planilha
+async function forcarAtualizacaoImediata() {
+    console.log('🔄 FORÇANDO ATUALIZAÇÃO IMEDIATA DA PLANILHA...');
+    
+    // Mostrar indicador de carregamento
+    const syncStatus = document.getElementById('syncStatus');
+    if (syncStatus) {
+        syncStatus.innerHTML = `
+            <i class="fas fa-sync-alt fa-spin"></i>
+            <span>Forçando atualização da planilha...</span>
+        `;
+    }
+    
+    try {
+        // Limpar cache
+        localStorage.removeItem('visualtech_products');
+        
+        // Buscar dados frescos da planilha
+        const produtosNovos = await fetchProductsFromGoogleSheets();
+        
+        if (produtosNovos.length > 0) {
+            console.log('✅ DADOS FRESCOS RECEBIDOS:', produtosNovos.length, 'produtos');
+            
+            // Atualizar produtos
+            products = produtosNovos;
+            
+            // Renderizar imediatamente
+            renderProducts();
+            
+            // Mostrar sucesso
+            if (syncStatus) {
+                syncStatus.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <span>Atualização concluída! ${produtosNovos.length} produtos carregados</span>
+                `;
+            }
+            
+            showNotification(`✅ Atualização concluída! ${produtosNovos.length} produtos carregados da planilha`, 'success');
+            
+            console.log('✅ ATUALIZAÇÃO IMEDIATA CONCLUÍDA!');
+            return produtosNovos;
+        } else {
+            console.log('❌ Nenhum produto encontrado na planilha');
+            showNotification('❌ Nenhum produto encontrado na planilha', 'error');
+            return [];
+        }
+        
+    } catch (error) {
+        console.error('❌ ERRO na atualização imediata:', error);
+        showNotification('❌ Erro na atualização: ' + error.message, 'error');
+        
+        if (syncStatus) {
+            syncStatus.innerHTML = `
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Erro na atualização - tente novamente</span>
+            `;
+        }
+        return [];
+    }
+}
+
+// Tornar função global para uso no console
+window.forcarAtualizacaoImediata = forcarAtualizacaoImediata;
 
 // Executar quando a página carregar - FORÇAR DADOS CORRETOS
 window.addEventListener('load', () => {
